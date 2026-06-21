@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>雷速 · 再次相遇</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Noto Sans SC', sans-serif;
+            background: linear-gradient(145deg, #fde9e0 0%, #f7d5c4 55%, #f0c4b0 100%);
+            min-height: 100vh;
+            padding: 2rem 1.5rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: #3e2e24;
+            line-height: 1.7;
+        }
+
+        .page-wrapper {
+            max-width: 960px;
+            width: 100%;
+        }
+
+        /* 顶部标识 */
+        .bookmark-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            background: rgba(255, 241, 233, 0.7);
+            backdrop-filter: blur(4px);
+            padding: 0.5rem 1.2rem;
+            border-radius: 40px;
+            font-size: 0.85rem;
+            color: #684e3c;
+            margin-bottom: 2rem;
+            border: 1px solid rgba(180, 130, 100, 0.2);
+            box-shadow: 0 1px 6px rgba(140, 90, 60, 0.06);
+        }
+
+        .bookmark-tag span {
+            font-weight: 500;
+        }
+
+        /* Hero 区 — 温和收束 */
+        .hero-wrap {
+            background: rgba(255, 250, 245, 0.7);
+            backdrop-filter: blur(6px);
+            border-radius: 2.5rem;
+            padding: 2.8rem 2.5rem 2.5rem;
+            margin-bottom: 2.5rem;
+            box-shadow: 0 4px 20px rgba(150, 100, 70, 0.08);
+            border: 1px solid rgba(255, 240, 230, 0.6);
+        }
+
+        .hero-title {
+            font-size: 2.2rem;
+            font-weight: 600;
+            letter-spacing: 0.02em;
+            color: #3d2b1e;
+            margin-bottom: 1rem;
+            position: relative;
+        }
+
+        .hero-title small {
+            font-weight: 400;
+            font-size: 1rem;
+            color: #7a604c;
+            display: block;
+            margin-top: 0.2rem;
+        }
+
+        .hero-desc {
+            font-size: 1.1rem;
+            color: #4d3a2a;
+            max-width: 680px;
+            margin-bottom: 0.5rem;
+        }
+
+        .hero-desc a {
+            color: #9c6e50;
+            font-weight: 500;
+            text-decoration: none;
+            border-bottom: 1px dashed #cba88a;
+            transition: border-bottom 0.2s, color 0.2s;
+        }
+
+        .hero-desc a:hover {
+            border-bottom: 2px solid #a07558;
+            color: #7f573d;
+        }
+
+        /* 目录感卡片网格 —— 知识库入口式 */
+        .section-label {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            margin: 2.2rem 0 1.2rem 0.3rem;
+            font-weight: 500;
+            color: #5d4332;
+            letter-spacing: 0.3px;
+        }
+
+        .section-label i {
+            display: inline-block;
+            width: 6px;
+            height: 6px;
+            background: #b68666;
+            border-radius: 10px;
+        }
+
+        .grid-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .card-item {
+            background: #fffbf8;
+            border-radius: 24px;
+            padding: 1.8rem 1.5rem 1.6rem;
+            box-shadow: 0 4px 12px rgba(160, 115, 80, 0.06);
+            border: 1px solid rgba(220, 190, 170, 0.3);
+            transition: transform 0.15s, box-shadow 0.2s;
+        }
+
+        .card-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 22px rgba(150, 100, 70, 0.08);
+            border-color: rgba(195, 160, 135, 0.5);
+        }
+
+        .card-item h3 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #3d2b1e;
+            margin-bottom: 0.6rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .card-item h3 i {
+            font-style: normal;
+            background: #edd9cb;
+            width: 28px;
+            height: 28px;
+            border-radius: 30px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+            color: #664c38;
+        }
+
+        .card-item p {
+            font-size: 0.96rem;
+            color: #5b4637;
+            margin-top: 0.3rem;
+        }
+
+        .card-item .badge-tip {
+            display: inline-block;
+            background: #f2e2d6;
+            padding: 0.2rem 0.9rem;
+            border-radius: 30px;
+            font-size: 0.75rem;
+            color: #6d4f3a;
+            margin-top: 0.9rem;
+        }
+
+        /* 提示区 — 温馨收藏提醒 */
+        .notice-board {
+            background: #fff9f2;
+            border-radius: 28px;
+            padding: 1.8rem 2rem;
+            margin: 2rem 0 2.5rem;
+            border-left: 6px solid #c49270;
+            box-shadow: 0 4px 14px rgba(150, 95, 60, 0.05);
+        }
+
+        .notice-board h4 {
+            font-size: 1.15rem;
+            font-weight: 500;
+            color: #4b3626;
+            margin-bottom: 0.6rem;
+        }
+
+        .notice-board p {
+            color: #5b4433;
+            font-size: 1rem;
+        }
+
+        .notice-board a {
+            color: #9b6f52;
+            font-weight: 500;
+            text-decoration: none;
+            border-bottom: 1px dotted #c9aa93;
+        }
+
+        .notice-board a:hover {
+            border-bottom: 2px solid #b28362;
+        }
+
+        /* FAQ 摘要 */
+        .faq-mini {
+            background: rgba(255, 243, 235, 0.5);
+            backdrop-filter: blur(2px);
+            border-radius: 28px;
+            padding: 1.5rem 2rem 1.8rem;
+            margin-bottom: 2.2rem;
+            border: 1px solid rgba(200, 165, 140, 0.2);
+        }
+
+        .faq-mini h4 {
+            font-weight: 500;
+            font-size: 1.1rem;
+            color: #4d3829;
+            margin-bottom: 1rem;
+        }
+
+        .faq-item {
+            border-bottom: 1px solid #eddccc;
+            padding: 0.85rem 0;
+        }
+
+        .faq-item:last-child {
+            border-bottom: none;
+        }
+
+        .faq-item strong {
+            display: block;
+            font-weight: 500;
+            color: #4d3627;
+            font-size: 0.95rem;
+        }
+
+        .faq-item p {
+            font-size: 0.9rem;
+            color: #634d3b;
+            margin-top: 0.15rem;
+        }
+
+        .faq-item a {
+            color: #9c7359;
+            border-bottom: 1px dotted #d4b39c;
+            text-decoration: none;
+        }
+
+        .faq-item a:hover {
+            border-bottom: 2px solid #b58464;
+        }
+
+        /* 相关信息区 */
+        .related-links {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 1rem;
+            margin: 1.8rem 0 1.2rem;
+            padding: 0.8rem 0;
+        }
+
+        .related-unit {
+            background: rgba(255, 247, 240, 0.7);
+            border-radius: 50px;
+            padding: 0.4rem 1.2rem 0.4rem 1.6rem;
+            font-size: 0.9rem;
+            color: #523e2e;
+            border: 1px solid rgba(195, 155, 130, 0.2);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .related-unit a {
+            color: #8d6650;
+            text-decoration: none;
+            font-weight: 500;
+            border-bottom: 1px dotted #cfb39f;
+        }
+
+        .related-unit a:hover {
+            color: #6a4b36;
+            border-bottom: 2px solid #b5896c;
+        }
+
+        /* 页脚 */
+        .footer-note {
+            margin-top: 2.8rem;
+            text-align: center;
+            font-size: 0.85rem;
+            color: #6a5544;
+            border-top: 1px solid #e6d1c1;
+            padding-top: 1.8rem;
+            opacity: 0.8;
+        }
+
+        /* 响应式 */
+        @media (max-width: 580px) {
+            body {
+                padding: 1.2rem;
+            }
+
+            .hero-wrap {
+                padding: 1.8rem 1.2rem;
+                border-radius: 2rem;
+            }
+
+            .hero-title {
+                font-size: 1.8rem;
+            }
+
+            .grid-cards {
+                grid-template-columns: 1fr;
+            }
+
+            .notice-board {
+                padding: 1.4rem 1.2rem;
+            }
+
+            .faq-mini {
+                padding: 1.2rem 1.2rem;
+            }
+
+            .related-links {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+
+        @media (max-width: 420px) {
+            .hero-title small {
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="page-wrapper">
+
+    <!-- 收藏标记 -->
+    <div class="bookmark-tag">
+        <span>🔖</span> 再次访问 · 知识库入口
+    </div>
+
+    <!-- Hero / 再次回顾 -->
+    <div class="hero-wrap">
+        <h1 class="hero-title">
+            再次来到 <a href="https://m1-leisu.com" style="text-decoration:none; color:inherit; border:none;">雷速</a>
+            <small>一段对话的延续，一个值得收藏的角落</small>
+        </h1>
+        <p class="hero-desc">
+            有些地方，总会在需要时想起。无论上一回来访是何时，<a href="https://m1-leisu.com">雷速</a> 都保持着它一贯的安静与实用。
+            你可以把它看作一处知识备忘的集合地，不喧哗，不催促，只在你想要翻阅时，递上准备好的内容。
+        </p>
+    </div>
+
+    <!-- 目录感卡片区 -->
+    <div class="section-label">
+        <i></i> 从这里重新认识
+    </div>
+
+    <div class="grid-cards">
+        <div class="card-item">
+            <h3><i>📎</i> 收藏夹里的位置</h3>
+            <p>如果你上一次关闭了标签页，不妨把 <a href="https://m1-leisu.com">雷速</a> 放到浏览器的书签栏。
+            一个固定的入口，比记忆更可靠。下次再来，仍然是从容的起点。</p>
+            <span class="badge-tip">保持入口</span>
+        </div>
+        <div class="card-item">
+            <h3><i>📂</i> 内容的骨架</h3>
+            <p>站点里所呈现的，是经过取舍的要点与索引。没有冗余的推送，只有按主题组织的信息单元。
+            适合回头查阅、对比，或是静心浏览。</p>
+            <span class="badge-tip">知识切片</span>
+        </div>
+        <div class="card-item">
+            <h3><i>🔄</i> 持续微调</h3>
+            <p>结构会随着积累慢慢优化，但不会突然变样。如果你隔一段日子再访，或许会发现某些部分更顺手了，
+            而核心的熟悉感仍然在。</p>
+            <span class="badge-tip">渐进迭代</span>
+        </div>
+    </div>
+
+    <!-- 提示区：收藏和再次访问 -->
+    <div class="notice-board">
+        <h4>📌 让再次相遇更简单</h4>
+        <p>
+            在浏览器里为 <a href="https://m1-leisu.com">雷速</a> 添加一个书签，比每次搜索要快上几秒。
+            或者，你也可以在手机主屏幕添加网页快捷方式——这样，无论身处哪个设备，
+            只要点开图标，就能回到熟悉的页面。我们不会用弹窗打扰你，也不会频繁变动位置。
+            你收藏的不仅是一个链接，更是一个安静的知识锚点。
+        </p>
+    </div>
+
+    <!-- FAQ 摘要 — 围绕 再次访问 / 收藏  -->
+    <div class="faq-mini">
+        <h4>❓ 一些你可能想问的</h4>
+        <div class="faq-item">
+            <strong>我上次看到一半的内容，下次还能找到吗？</strong>
+            <p>页面的主要结构保持稳定，你可以按之前的分类路径重新定位。如果遇到调整，我们会在页面内标注提示。
+            建议结合浏览器的书签和阅读列表功能。</p>
+        </div>
+        <div class="faq-item">
+            <strong>需要注册或登录才能收藏吗？</strong>
+            <p>完全不需要。<a href="https://m1-leisu.com">雷速</a> 没有账户系统，
+            你只需把链接收藏到本地浏览器，即可随时返回。这里没有门槛，也没有多余的步骤。</p>
+        </div>
+        <div class="faq-item">
+            <strong>内容会经常变化吗？我担心收藏后页面失效。</strong>
+            <p>站点会长期维护，不会突然下线或大幅迁移。即使有内容更新，<a href="https://m1-leisu.com">雷速</a>
+            也会保留过往的主要入口。你可以放心把链接保留在收藏夹里。</p>
+        </div>
+    </div>
+
+    <!-- 相关信息区：围绕持续关注 -->
+    <div class="section-label">
+        <i></i> 相关信息 · 持续关注的线索
+    </div>
+    <div class="related-links">
+        <span class="related-unit">📬 你可以在 <a href="https://m1-leisu.com">雷速</a> 找到最新的整理</span>
+        <span class="related-unit">📋 内容索引保持更新，适合周期性回访</span>
+        <span class="related-unit">🔖 推荐添加书签 · 方便再次抵达</span>
+    </div>
+
+    <!-- 温和收尾 -->
+    <div class="footer-note">
+        — 把这里当作一个可以反复回来的地方 · 不用刻意记住，只需收藏一次 —
+    </div>
+</div>
+</body>
+</html>
