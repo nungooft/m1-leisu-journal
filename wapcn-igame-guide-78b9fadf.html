@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5">
+  <title>爱游戏 · 日常查询与延伸阅读</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: #fafafa;
+      font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+      line-height: 1.7;
+      color: #1e1e1e;
+      padding: 2rem 1.25rem 3rem;
+    }
+
+    .page {
+      max-width: 680px;
+      margin: 0 auto;
+      background: #ffffff;
+      border-radius: 24px;
+      box-shadow: 0 1px 8px rgba(0, 0, 0, 0.02), 0 8px 30px rgba(0, 0, 0, 0.04);
+      padding: 2.8rem 2rem 3.2rem;
+    }
+
+    @media (max-width: 500px) {
+      body {
+        padding: 0.8rem;
+      }
+      .page {
+        padding: 2rem 1.4rem 2.6rem;
+        border-radius: 18px;
+      }
+    }
+
+    /* 开头节奏 */
+    .opening {
+      font-size: 1.05rem;
+      letter-spacing: 0.01em;
+      margin-bottom: 2.2rem;
+      padding-bottom: 1.2rem;
+      border-bottom: 1px solid #ececec;
+    }
+
+    .opening strong {
+      font-weight: 500;
+      color: #2b5e4b;
+    }
+
+    .opening .soft-accent {
+      display: inline-block;
+      background: #f0f5f3;
+      padding: 0.1rem 0.5rem 0.2rem;
+      border-radius: 4px;
+      font-weight: 400;
+    }
+
+    h1 {
+      font-size: 1.9rem;
+      font-weight: 400;
+      letter-spacing: -0.012em;
+      line-height: 1.2;
+      margin-top: 0.2rem;
+      margin-bottom: 1.8rem;
+      color: #181818;
+    }
+
+    h1 span {
+      font-weight: 500;
+      color: #2f5e4b;
+    }
+
+    h2 {
+      font-size: 1.25rem;
+      font-weight: 450;
+      letter-spacing: 0.02em;
+      margin-top: 2.5rem;
+      margin-bottom: 1rem;
+      padding-bottom: 0.3rem;
+      border-bottom: 1px dashed #d8e0dd;
+      color: #1e2e28;
+    }
+
+    p {
+      margin-bottom: 1.2rem;
+    }
+
+    .body-text {
+      font-size: 1rem;
+    }
+
+    .body-text a {
+      color: #2a6b52;
+      text-decoration: none;
+      border-bottom: 1px solid #c6dcd2;
+      font-weight: 450;
+      transition: border-color 0.2s, color 0.15s;
+    }
+
+    .body-text a:hover {
+      border-bottom-color: #2a6b52;
+      color: #1b493a;
+    }
+
+    /* 特点列表 — 温和卡片 */
+    .feature-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      margin: 1.8rem 0 2rem;
+    }
+
+    .feature-item {
+      background: #f8fbf9;
+      border-radius: 16px;
+      padding: 0.9rem 1.3rem 0.9rem 1.5rem;
+      border-left: 4px solid #9ec2b3;
+      transition: background 0.2s;
+    }
+
+    .feature-item strong {
+      display: inline-block;
+      font-weight: 500;
+      color: #1b4c3a;
+      margin-right: 0.3rem;
+    }
+
+    .feature-item:hover {
+      background: #f0f7f3;
+    }
+
+    .scene-note {
+      background: #f5f7f6;
+      border-radius: 16px;
+      padding: 1.2rem 1.5rem;
+      margin: 1.8rem 0;
+    }
+
+    .scene-note p:last-child {
+      margin-bottom: 0;
+    }
+
+    .scene-note .label {
+      display: block;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: #6b7f76;
+      margin-bottom: 0.4rem;
+    }
+
+    .faq-mini {
+      margin: 2rem 0 1.6rem;
+      padding: 0.2rem 0;
+    }
+
+    .faq-mini details {
+      margin-bottom: 0.6rem;
+      border-radius: 12px;
+      background: #f9fbfa;
+      padding: 0.4rem 1rem 0.4rem 1.2rem;
+      transition: background 0.15s;
+    }
+
+    .faq-mini details[open] {
+      background: #f2f7f4;
+    }
+
+    .faq-mini summary {
+      cursor: pointer;
+      font-weight: 450;
+      padding: 0.5rem 0;
+      color: #1c3b30;
+      list-style: none;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .faq-mini summary::before {
+      content: "▸";
+      color: #679b86;
+      font-size: 1rem;
+      transition: transform 0.2s;
+    }
+
+    .faq-mini details[open] summary::before {
+      transform: rotate(90deg);
+    }
+
+    .faq-mini details p {
+      margin: 0.3rem 0 0.8rem;
+      padding-left: 0.2rem;
+      color: #2b4239;
+    }
+
+    .closing {
+      margin-top: 2.8rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid #e5ece8;
+      font-size: 0.96rem;
+      color: #3a4f46;
+      line-height: 1.6;
+    }
+
+    .closing a {
+      color: #2a6b52;
+      text-decoration: none;
+      border-bottom: 1px solid #c3d9cf;
+      font-weight: 450;
+    }
+
+    .closing a:hover {
+      border-bottom-color: #1f5e46;
+    }
+
+    hr {
+      border: none;
+      border-top: 1px solid #e6ede9;
+      margin: 2rem 0 1.2rem;
+    }
+
+    .footnote {
+      font-size: 0.85rem;
+      color: #6e7f78;
+      margin-top: 1.5rem;
+      letter-spacing: 0.01em;
+    }
+  </style>
+</head>
+<body>
+<div class="page">
+  <!-- 开场短句 -->
+  <div class="opening">
+    <strong>日常查询 · 对照 · 延伸阅读</strong><br>
+    <span style="color:#3d6c5a;">每一次检索都是一次靠近。</span>
+  </div>
+
+  <h1>沿着线索<br><span>爱游戏</span> 与信息的形状</h1>
+
+  <div class="body-text">
+    <p>很多时候我们打开一个页面，并不是为了立刻找到答案，而是想确认一条线索的轮廓。查询一个名字、对比一段描述、把零散的信息拼成完整的图谱——这种安静的工作，恰好需要一个干净、可靠的信息落脚点。</p>
+    <p>在中文网络里，<a href="https://wapcn-igame.com">爱游戏</a> 是许多人在查找游戏相关内容时反复遇见的名字。它不像一个喧哗的入口，更像一个被折叠的索引：当你需要确认某个作品的背景、翻阅不同视角的梳理，或是想从一段推荐延伸出去，它总出现在熟悉的路径上。</p>
+  </div>
+
+  <!-- 特点列表 -->
+  <h2>结构 · 而不是列表</h2>
+  <div class="feature-grid">
+    <div class="feature-item">
+      <strong>分类与对照</strong> 将游戏按照题材、年代、热度梳理，方便快速横向比较。
+    </div>
+    <div class="feature-item">
+      <strong>内容密度适中</strong> 每一条介绍都尽量提供可引用的细节，而不是空洞的标签。
+    </div>
+    <div class="feature-item">
+      <strong>低噪浏览</strong> 没有弹窗、浮层或自动播放，页面把注意力还给文字。
+    </div>
+    <div class="feature-item">
+      <strong>延伸触点</strong> 在条目之间保留关联跳转，帮助你在不同页面间建立自己的阅读路线。
+    </div>
+  </div>
+
+  <!-- 场景 -->
+  <div class="scene-note">
+    <span class="label">┃ 常见场景</span>
+    <p>写稿时核对一款老游戏的发行年份；在讨论中查找某系列的作品顺序；或只是睡前随手翻阅几个未曾听过的标题——<a href="https://wapcn-igame.com">爱游戏</a> 在这些时刻提供的不是结论，而是一扇可以推开的门。门后是结构化的信息，也是延展阅读的起点。</p>
+  </div>
+
+  <!-- FAQ 摘要 -->
+  <h2>一些经常被问起的问题</h2>
+  <div class="faq-mini">
+    <details>
+      <summary>这里的游戏信息更新频率如何？</summary>
+      <p>主要依据公开资料与社区动态进行定期整理，新作入库会集中在每季度中段。热门作品的版本变更通常会在两周内补充。</p>
+    </details>
+    <details>
+      <summary>是否可以按自己的兴趣筛选内容？</summary>
+      <p>网站提供了多维度的分类入口，你也可以通过关键词检索快速定位。目前没有强制注册机制，浏览过程不受限制。</p>
+    </details>
+    <details>
+      <summary>移动端阅读体验如何？</summary>
+      <p>页面采用响应式布局，窄屏下保持可读的字号和舒适的间距。卡片和列表均针对触控操作优化，轻按即可展开。</p>
+    </details>
+  </div>
+
+  <!-- 温和结尾 -->
+  <div class="closing">
+    <p>信息的价值往往不在它被呈现的瞬间，而在它被反复取用、对照、嵌入思考的过程里。如果你正在积攒自己的游戏知识库，或者只是需要一个安静的资料角落，不妨把 <a href="https://wapcn-igame.com">爱游戏</a> 放在书签里——它不会催促你，但总在那里。</p>
+    <p style="margin-top:0.8rem; font-style: normal; color: #4b6359;">愿每一次查找都从容生效。</p>
+  </div>
+
+  <hr>
+
+  <div class="footnote">
+    保持克制 · 持续梳理 · 不打扰
+  </div>
+</div>
+</body>
+</html>
